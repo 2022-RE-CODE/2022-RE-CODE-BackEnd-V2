@@ -17,10 +17,6 @@ public class JwtProvider {
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public String generatedAccessToken(String id) {
-        return generatedToken(id, jwtProperties.getAccessExp());
-    }
-
     private String generatedToken(String id, Long exp) {
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
@@ -30,4 +26,13 @@ public class JwtProvider {
                 .setExpiration(new Date(System.currentTimeMillis() + exp * 1000))
                 .compact();
     }
+
+    public String generatedAccessToken(String id) {
+        return generatedToken(id, jwtProperties.getAccessExp());
+    }
+
+    public String generatedRefreshToken(String id) {
+        return generatedToken(id, jwtProperties.getRefreshExp());
+    }
+
 }
