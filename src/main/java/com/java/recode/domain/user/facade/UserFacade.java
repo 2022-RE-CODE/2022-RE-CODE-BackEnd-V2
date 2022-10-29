@@ -4,6 +4,7 @@ import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.domain.repository.UserRepository;
 import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
 import com.java.recode.domain.user.verifier.CreateUserVerifier;
+import com.java.recode.global.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -21,8 +22,7 @@ public class UserFacade {
     }
 
     public User getCurrentUser() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return getUserByEmail(email);
+        return SecurityUtil.getCurrentUser().getUser();
     }
 
     public User getUserByEmail(String email) {
