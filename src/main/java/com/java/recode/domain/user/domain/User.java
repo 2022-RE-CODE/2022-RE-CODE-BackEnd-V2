@@ -2,6 +2,7 @@ package com.java.recode.domain.user.domain;
 
 import com.java.recode.domain.user.domain.type.Position;
 import com.java.recode.domain.user.domain.type.Role;
+import com.java.recode.global.entity.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -26,7 +27,7 @@ import static lombok.AccessLevel.PROTECTED;
                 columnNames = {"email", "gitLink", "blogLink", "imgPath", "imgUrl"}
         )
 })
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
