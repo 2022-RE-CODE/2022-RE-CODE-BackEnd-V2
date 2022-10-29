@@ -2,7 +2,6 @@ package com.java.recode.domain.user.presentation.dto.req;
 
 import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.domain.type.Position;
-import com.java.recode.domain.user.domain.type.Role;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,7 +12,7 @@ import javax.validation.constraints.Pattern;
 import static com.java.recode.domain.user.domain.type.Role.*;
 
 @Getter
-public class SignUpUserReq {
+public class SignUpUserRequestDto {
 
     @NotBlank(message = "이메일은 필수 입력 값입니다.")
     @Email(message = "이메일 형식에 맞지 않습니다.")
@@ -32,7 +31,7 @@ public class SignUpUserReq {
     private final String checkPassword;
     private final String position;
 
-    public SignUpUserReq(String email, String nickname, String password, String checkPassword, String position) {
+    public SignUpUserRequestDto(String email, String nickname, String password, String checkPassword, String position) {
         this.email = email;
 //        this.checkEmailCode = checkEmailCode;
         this.nickname = nickname;

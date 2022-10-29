@@ -1,7 +1,8 @@
 package com.java.recode.domain.user.service;
 
 import com.java.recode.domain.user.facade.UserFacade;
-import com.java.recode.domain.user.presentation.dto.req.SignUpUserReq;
+import com.java.recode.domain.user.presentation.dto.req.SignUpUserRequestDto;
+import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,11 @@ public class UserService {
     private final UserFacade userFacade;
 
     @Transactional
-    public void signUp(SignUpUserReq req) {
+    public void signUp(SignUpUserRequestDto req) {
         userFacade.createUser(req.toEntity());
+    }
+
+    public UserResponseDto getCurrentUser() {
+        return new UserResponseDto(userFacade.getCurrentUser());
     }
 }
