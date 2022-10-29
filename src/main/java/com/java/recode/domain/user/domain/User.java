@@ -46,12 +46,12 @@ public class User extends BaseTimeEntity {
     private String password;
 
     @NotNull
-    @Size(max = 8)
+    @Column(length = 8)
     @Enumerated(STRING)
     private Role role;
 
     @NotNull
-    @Size(max = 8)
+    @Column(length = 8)
     @Enumerated(STRING)
     private Position position;
 
