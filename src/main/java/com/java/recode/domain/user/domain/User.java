@@ -3,11 +3,14 @@ package com.java.recode.domain.user.domain;
 import com.java.recode.domain.user.domain.type.Position;
 import com.java.recode.domain.user.domain.type.Role;
 import com.java.recode.global.entity.BaseTimeEntity;
+import com.java.recode.global.error.exception.ErrorCode;
+import com.java.recode.global.error.exception.ReCodeException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -82,5 +85,16 @@ public class User extends BaseTimeEntity {
         this.blogLink = blogLink;
         this.imgPath = imgPath;
         this.imgUrl = imgUrl;
+    }
+
+    // auth
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void matchedPassword(PasswordEncoder passwordEncoder, User user, String password) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new ReCodeException(ErrorCode.NOT_MATCH_PASSWORD);
+        }
     }
 }
