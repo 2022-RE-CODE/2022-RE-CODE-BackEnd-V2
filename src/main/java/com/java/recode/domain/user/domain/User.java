@@ -3,6 +3,7 @@ package com.java.recode.domain.user.domain;
 import com.java.recode.domain.user.domain.type.Position;
 import com.java.recode.domain.user.domain.type.Role;
 import com.java.recode.global.entity.BaseTimeEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -70,4 +71,16 @@ public class User extends BaseTimeEntity {
     @Column
     private String imgUrl;
 
+    @Builder
+    public User(String email, String nickname, String password, Role role, Position position, String gitLink, String blogLink, String imgPath, String imgUrl) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.role = role;
+        this.position = position;
+        this.gitLink = gitLink;
+        this.blogLink = blogLink;
+        this.imgPath = imgPath;
+        this.imgUrl = imgUrl;
+    }
 }
