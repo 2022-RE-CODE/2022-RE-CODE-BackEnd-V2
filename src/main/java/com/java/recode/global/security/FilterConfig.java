@@ -1,6 +1,7 @@
 package com.java.recode.global.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.java.recode.global.error.exception.ExceptionFilter;
 import com.java.recode.global.security.jwt.JwtFilter;
 import com.java.recode.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,9 @@ public class FilterConfig extends SecurityConfigurerAdapter<DefaultSecurityFilte
 
     @Override
     public void configure(HttpSecurity builder) throws Exception {
-        JwtFilter jwtFilter = new JwtFilter(jwtProvider);
-        builder.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        JwtFilter jwtTokenFilter = new JwtFilter(jwtProvider);
+        ExceptionFilter exceptionFilter = new ExceptionFilter(objectMapper);
+        builder.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        builder.addFilterBefore(exceptionFilter, JwtFilter.class);
     }
 }
