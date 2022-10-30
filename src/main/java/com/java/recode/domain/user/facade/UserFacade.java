@@ -2,10 +2,8 @@ package com.java.recode.domain.user.facade;
 
 import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.domain.repository.UserRepository;
-import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
+import com.java.recode.domain.user.exception.UserNotFoundException;
 import com.java.recode.domain.user.verifier.CreateUserVerifier;
-import com.java.recode.global.error.exception.ErrorCode;
-import com.java.recode.global.error.exception.ReCodeException;
 import com.java.recode.global.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,11 +29,11 @@ public class UserFacade {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 
     public User findUserByUserId(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ReCodeException(ErrorCode.USER_NOT_FOUND));
+                .orElseThrow(() -> UserNotFoundException.EXCEPTION);
     }
 }
