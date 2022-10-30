@@ -87,7 +87,7 @@ public class User extends BaseTimeEntity {
         this.imgUrl = imgUrl;
     }
 
-    // auth
+    // auth TODO : Validate 클래스로 분리하고 싶음
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
