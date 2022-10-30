@@ -24,7 +24,14 @@ public class UserController {
     }
     
     @GetMapping("/{userId}")
-    public UserResponseDto getUserByUserId(@PathVariable Long userId) {
-        return userService.getUserByUserId(userId);
+    public UserResponseDto getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
+    }
+
+    @GetMapping("/nickname")
+    public UserResponseDto getUserByNickname(
+            @RequestParam("nickname") String nickname
+    ) {
+        return userService.getUserByNickname(nickname);
     }
 }

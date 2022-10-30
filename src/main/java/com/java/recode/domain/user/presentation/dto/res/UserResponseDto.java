@@ -2,18 +2,20 @@ package com.java.recode.domain.user.presentation.dto.res;
 
 import com.java.recode.domain.user.domain.User;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class UserResponseDto {
 
-    private final Long userId;
-    private final String nickname;
-    private final String role;
-    private final String roles;
-    private final String position;
-    private final String gitLink;
-    private final String blogLink;
-    private final String img;
+    private Long userId;
+    private String nickname;
+    private String role;
+    private String roles;
+    private String position;
+    private String gitLink;
+    private String blogLink;
+    private String img;
 
     public UserResponseDto(User user) {
         this.userId = user.getId();
