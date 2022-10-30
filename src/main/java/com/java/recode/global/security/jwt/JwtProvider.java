@@ -3,6 +3,8 @@ package com.java.recode.global.security.jwt;
 import com.java.recode.domain.auth.domain.RefreshToken;
 import com.java.recode.domain.auth.domain.repository.RefreshTokenRepository;
 import com.java.recode.global.security.auth.AuthDetailsService;
+import com.java.recode.global.security.jwt.exception.ExpiredJwtException;
+import com.java.recode.global.security.jwt.exception.InvalidJwtException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -83,11 +85,9 @@ public class JwtProvider {
             return Jwts.parser().setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token).getBody();
         } catch (io.jsonwebtoken.ExpiredJwtException e) {
-//            throw ExpiredJwtException.EXCEPTION;
+            throw ExpiredJwtException.EXCEPTION;
         } catch (Exception e) {
-//            throw InvalidJwtException.EXCEPTION;
+            throw InvalidJwtException.EXCEPTION;
         }
-
-        return null;
     }
 }
