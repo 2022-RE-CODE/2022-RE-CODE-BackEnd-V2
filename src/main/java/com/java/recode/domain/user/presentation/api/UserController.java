@@ -22,4 +22,9 @@ public class UserController {
     public UserResponseDto getUser() {
         return userService.getCurrentUser();
     }
+    
+    @GetMapping("/{userId}")
+    public UserResponseDto getUserByUserId(@PathVariable Long userId) {
+        return userService.getUserByUserId(userId);
+    }
 }

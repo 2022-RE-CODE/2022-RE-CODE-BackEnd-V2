@@ -97,4 +97,22 @@ public class User extends BaseTimeEntity {
             throw new ReCodeException(ErrorCode.NOT_MATCH_PASSWORD);
         }
     }
+
+    // update
+    public void updateBlogLink(String blogLink) {
+        this.blogLink = blogLink;
+    }
+
+    public void updateGitLink(String gitLink) {
+        this.gitLink = gitLink;
+    }
+
+    public void updateImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
+
+    public void updateImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 }

@@ -21,4 +21,11 @@ public class CreateUserVerifier {
                     }
                 });
     }
+
+    public static void nullToEmptyString(User user) {
+        user.updateBlogLink("");
+        user.updateGitLink("");
+        user.updateImgUrl("");
+        user.updateImgPath("");
+    }
 }

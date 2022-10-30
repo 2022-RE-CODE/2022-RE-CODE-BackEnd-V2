@@ -14,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.http.HttpMethod.*;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -37,14 +39,14 @@ public class SecurityConfig {
                 .exceptionHandling()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user").permitAll()
-                .antMatchers(HttpMethod.GET, "/user").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                .antMatchers(POST, "/user").permitAll()
+                .antMatchers(GET, "/user").permitAll()
+                .antMatchers(GET, "/user/{userId}").permitAll()
+                .antMatchers(POST, "/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint(objectMapper))
-
                 .and()
                 .apply(new FilterConfig(jwtProvider, objectMapper));
         return http.build();

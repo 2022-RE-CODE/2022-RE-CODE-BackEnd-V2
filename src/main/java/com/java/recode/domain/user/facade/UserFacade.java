@@ -4,6 +4,8 @@ import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.domain.repository.UserRepository;
 import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
 import com.java.recode.domain.user.verifier.CreateUserVerifier;
+import com.java.recode.global.error.exception.ErrorCode;
+import com.java.recode.global.error.exception.ReCodeException;
 import com.java.recode.global.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +19,10 @@ public class UserFacade {
     private final UserRepository userRepository;
     private final CreateUserVerifier createUserVerifier;
 
-    public void createUser(User user) {
+    public User createUser(User user) {
         createUserVerifier.alreadyExistsUserVerifier(user);
         user.encodePassword(passwordEncoder);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public User getCurrentUser() {
@@ -32,4 +34,8 @@ public class UserFacade {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
     }
 
+    public User findUserByUserId(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ReCodeException(ErrorCode.USER_NOT_FOUND));
+    }
 }
