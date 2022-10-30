@@ -1,6 +1,7 @@
-package com.java.recode.domain.user.presentation.api;
+package com.java.recode.domain.user.presentation;
 
 import com.java.recode.domain.user.presentation.dto.req.SignUpUserRequestDto;
+import com.java.recode.domain.user.presentation.dto.req.UpdateUserRequestDto;
 import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
 import com.java.recode.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,10 @@ public class UserController {
             @RequestParam("nickname") String nickname
     ) {
         return userService.getUserByNickname(nickname);
+    }
+
+    @PutMapping
+    public UserResponseDto updateUser(@RequestBody UpdateUserRequestDto req) {
+        return userService.updateMe(req);
     }
 }

@@ -2,7 +2,9 @@ package com.java.recode.domain.user.facade;
 
 import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.domain.repository.UserRepository;
+import com.java.recode.domain.user.domain.type.Position;
 import com.java.recode.domain.user.exception.UserNotFoundException;
+import com.java.recode.domain.user.presentation.dto.req.UpdateUserRequestDto;
 import com.java.recode.domain.user.verifier.CreateUserVerifier;
 import com.java.recode.global.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +42,17 @@ public class UserFacade {
     public User findUserByNickname(String nickname) {
         return userRepository.findByNickname(nickname)
                 .orElseThrow(()  -> UserNotFoundException.EXCEPTION);
+    }
+
+    public User updateMyAccountInfo(UpdateUserRequestDto req) {
+        User user = getCurrentUser();
+        user.updateGitLink(req.getGitLink());
+        user.updateBlogLink(req.getBlogLink());
+        user.updateNickname(req.getNickname());
+        user.updatePassword(req.getPassword());
+        user.updatePosition(req.getPosition());
+
+        createUser(user);
+        return user;
     }
 }
