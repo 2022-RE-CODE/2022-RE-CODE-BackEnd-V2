@@ -1,11 +1,13 @@
 package com.java.recode.global.security.jwt;
 
+import com.java.recode.domain.auth.domain.RefreshToken;
 import com.java.recode.domain.auth.domain.repository.RefreshTokenRepository;
 import com.java.recode.global.security.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,7 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Objects;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
@@ -24,26 +27,34 @@ public class JwtProvider {
     private final AuthDetailsService authDetailsService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    private String generatedToken(String id, Long exp) {
+    private String generateToken(String id, String type, Long exp) {
         return Jwts.builder()
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .setSubject(id)
-                .claim("type", "access")
+                .claim("type", type)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + exp * 1000))
                 .compact();
     }
 
-    public String generatedAccessToken(String id) {
-        return generatedToken(id, jwtProperties.getAccessExp());
+    public String generateAccessToken(String id) {
+        return generateToken(id, "access", jwtProperties.getAccessExp());
     }
 
-    public String generatedRefreshToken(String id) {
-        return generatedToken(id, jwtProperties.getRefreshExp());
+    public String generateRefreshToken(String id) {
+        String refreshToken = generateToken(id, "refresh", jwtProperties.getRefreshExp());
+        refreshTokenRepository.save(RefreshToken.builder()
+                .email(id)
+                .token(refreshToken)
+                .timeToLive(jwtProperties.getRefreshExp())
+                .build());
+
+        return refreshToken;
     }
 
     public String resolveToken(HttpServletRequest request) {
         String bearer = request.getHeader(jwtProperties.getHeader());
+        log.error("return parseToken : {}", parseToken(bearer));
         return parseToken(bearer);
     }
 

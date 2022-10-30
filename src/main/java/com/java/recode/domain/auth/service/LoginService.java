@@ -25,8 +25,8 @@ public class LoginService {
         user.matchedPassword(passwordEncoder, user, loginReq.getPassword());
 
         // TODO
-        String accessToken = jwtProvider.generatedAccessToken(user.getEmail());
-        String refreshToken = jwtProvider.generatedRefreshToken(user.getEmail());
+        String accessToken = jwtProvider.generateAccessToken(user.getEmail());
+        String refreshToken = jwtProvider.generateRefreshToken(user.getEmail());
 
         return TokenResponseDto.builder()
                 .accessToken(accessToken)
