@@ -6,15 +6,14 @@ import com.java.recode.domain.user.presentation.dto.req.SignUpUserRequestDto;
 import com.java.recode.domain.user.presentation.dto.req.UpdateUserRequestDto;
 import com.java.recode.domain.user.presentation.dto.res.UserResponseDto;
 import com.java.recode.domain.user.verifier.CreateUserVerifier;
+import com.java.recode.global.annotation.ServiceWithTransactionalReadOnly;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-@Service
+@ServiceWithTransactionalReadOnly
 public class UserService {
 
     private final UserFacade userFacade;

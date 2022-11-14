@@ -4,14 +4,13 @@ import com.java.recode.domain.auth.presentation.dto.req.LoginRequestDto;
 import com.java.recode.domain.auth.presentation.dto.res.TokenResponseDto;
 import com.java.recode.domain.user.domain.User;
 import com.java.recode.domain.user.facade.UserFacade;
+import com.java.recode.global.annotation.ServiceWithTransactionalReadOnly;
 import com.java.recode.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional(readOnly = true)
+@ServiceWithTransactionalReadOnly
 @RequiredArgsConstructor
 public class LoginService {
 

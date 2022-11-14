@@ -56,7 +56,7 @@ public class JwtProvider {
 
     public String resolveToken(HttpServletRequest request) {
         String bearer = request.getHeader(jwtProperties.getHeader());
-        log.info("return parseToken : {}", parseToken(bearer));
+        log.info("parseToken : {}", parseToken(bearer));
         return parseToken(bearer);
     }
 
